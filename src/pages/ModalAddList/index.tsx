@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { addList, useListsSelect } from '../../states'
+import { addList, getLists } from '../../states'
 import { Color } from '../../styles/theme'
 import { customStorage } from '../../utils'
 import * as S from './styles'
@@ -18,14 +18,15 @@ const MOCK_COLORS_THEME: Color[] = [
 export const ModalAddList = () => {
   const navigate = useNavigate()
   const [listName, setListName] = useState('')
-  const lists = useListsSelect()
+  const [colorSelected, setColorSelected] = useState<Color>('themeBlue')
 
   const handleAddList = () => {
     if (listName.length <= 3) return
 
-    addList(listName)
-    customStorage.setItem('lists', lists)
+    addList(listName, colorSelected)
+    customStorage.setItem('lists', getLists())
     setListName('')
+    setColorSelected('themeBlue')
     navigate('/lists')
   }
 
@@ -42,7 +43,12 @@ export const ModalAddList = () => {
 
           <S.ThemesWrapper>
             {MOCK_COLORS_THEME.map((color) => (
-              <S.Theme key={color} colorTheme={color}>
+              <S.Theme
+                key={color}
+                colorTheme={color}
+                select={color === colorSelected ? true : false}
+                onClick={() => setColorSelected(color)}
+              >
                 <S.ThemeInternal colorTheme={color} />
               </S.Theme>
             ))}

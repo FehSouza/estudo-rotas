@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Color } from '../../styles/theme'
 
 export const Modal = styled.div`
-  /* background-color: ${({ theme }) => theme.colors.white}8D; */
+  background-color: ${({ theme }) => theme.colors.white}8D;
   position: fixed;
   top: 0;
   left: 0;
@@ -41,11 +41,11 @@ export const ThemesWrapper = styled.ul`
   gap: 0.5rem;
 `
 
-export const Theme = styled.li<{ colorTheme: Color }>`
+export const Theme = styled.li<{ colorTheme: Color, select: boolean }>`
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 100%;
-  border: 0.125rem solid ${({ theme, colorTheme }) => theme.colors[colorTheme]};
+  border: 0.125rem solid ${({ theme, select, colorTheme }) => select ? theme.colors[colorTheme] : theme.colors.white};
   background-color: ${({ theme }) => theme.colors.white};
 `
 
@@ -55,6 +55,7 @@ export const ThemeInternal = styled.div<{ colorTheme: Color }>`
   border-radius: 100%;
   border: 0.125rem solid ${({ theme }) => theme.colors.white};
   background-color: ${({ theme, colorTheme }) => (colorTheme ? theme.colors[colorTheme] : theme.colors.themeBlue)};
+
   &:hover {
     cursor: pointer;
   }
@@ -79,9 +80,14 @@ export const Input = styled.input`
   background-color: ${({ theme }) => theme.colors.white};
   border: 0.0625rem solid ${({ theme }) => theme.colors.themeBlue};
   border-radius: 0.5rem;
+  transition-duration: 350ms;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.textLight};
+  }
+
+  &:focus {
+    border: 0.0625rem solid ${({ theme }) => lighten(0.15, theme.colors.themeBlue)};
   }
 `
 
@@ -105,6 +111,7 @@ export const Button = styled.button`
   }
 
   &:hover {
-    background-color: ${({ theme }) => lighten(0.06, theme.colors.textLight)};
+    background-color: ${({ theme }) => lighten(0.15, theme.colors.themeBlue)};
+    border: 0.09375rem solid ${({ theme }) => lighten(0.15, theme.colors.themeBlue)};
   }
 `

@@ -7,7 +7,7 @@ export const List = () => {
   return (
     <S.Lists>
       {lists.map((list) => (
-        <S.ListItem key={list.id}>{list.name}</S.ListItem>
+        <S.ListItem key={list.id} color={list.color}>{list.name}</S.ListItem>
       ))}
     </S.Lists>
   )
